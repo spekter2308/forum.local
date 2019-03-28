@@ -12,5 +12,14 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+	return view('welcome');
 });
+
+Route::get('/threads', 'ThreadController@index');
+Route::get('/threads/{thread}', 'ThreadController@show');
+Route::post('/threads', 'ThreadController@store');
+Route::post('/threads/{thread}/replies', 'ReplyController@store');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
