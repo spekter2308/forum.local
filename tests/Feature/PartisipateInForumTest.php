@@ -13,23 +13,37 @@ class PartisipateInForumTest extends TestCase
     /** @test */
     function unauthenticated_users_may_not_add_replies()
     {
-        $this->expectException(AuthenticationException::class);
-
-        $this->post('/threads/1/replies', []);
+        $this->withExceptionHandling()
+             ->post('/threads/{channel}/1/replies', [])
+             ->assertRedirect('login');
 
     }
 
     /** @test */
     function an_autificated_user_may_participate_in_forum_thread()
     {
-        $this->be($user = factory('App\User')->create());
+        $this->be($user = create('App\User'));
 
-        $thread = factory('App\Thread')->create();
-        $reply = factory('App\Reply')->create();
+        $thread = create('App\Thread');
+        $reply = create('App\Reply');
 
         $this->post($thread->path() . '/replies', $reply->toArray());
 
         $this->get($thread->path())
             ->assertSee($reply->body);
     }
+
+    /** @test */
+    function a_reply_requires_a_body()
+    {
+        $this->withExceptionHandling()->signIn();
+
+        $thread = create('App\Thread');
+        $reply = make('App\Reply', ['body' => null]);
+
+        $this->post($thread->path() . '/replies', $reply->toArray())
+            ->assertSessionHasErrors('body');
+    }
+
+
 }

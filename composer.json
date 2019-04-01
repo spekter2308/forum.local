@@ -45,7 +45,8 @@
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "tests/"
-        }
+        },
+        "files": ["tests/utilities/functions.php"]
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
@@ -64,6 +65,9 @@
             "Illuminate\\Foundation\\ComposerScripts::postUpdate",
             "php artisan ide-helper:generate",
             "php artisan ide-helper:meta"
+        ],
+        "test": [
+            "php vendor/phpunit/phpunit/phpunit"
         ]
     }
 }
