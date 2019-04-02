@@ -6,7 +6,7 @@ use App\Thread;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
-class ThreadsTest extends TestCase
+class ReadThreadsTest extends TestCase
 {
 	use DatabaseMigrations;
 
@@ -50,5 +50,18 @@ class ThreadsTest extends TestCase
         $this->get('/threads/' . $channel->slug)
             ->assertSee($threadInChannel->title)
             ->assertDontSee($threadNotInChannel->title);
+    }
+
+    /** @test */
+    function a_user_can_filter_threads_by_any_username()
+    {
+        $this->signIn(create('App\User', ['name' => 'admin']));
+
+        $userThread = create('App\Thread', ['user_id' => auth()->id()]);
+        $notUserThread = create('App\Thread');
+
+        $this->get('threads?by=admin')
+             ->assertSee($userThread->title)
+             ->assertDontSee($notUserThread->title);
     }
 }
