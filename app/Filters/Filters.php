@@ -32,9 +32,6 @@ abstract class Filters
             }
         }
 
-       /* if (!$username = $this->request->by)
-            return $builder;*/
-
         return $this->builder;
     }
 
