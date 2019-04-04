@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Channel;
+use App\Reply;
 use App\Thread;
 use App\Filters\ThreadFilters;
 use Illuminate\Http\Request;
@@ -132,7 +133,6 @@ class ThreadController extends Controller
         }
 
         $threads = $threads->get();
-        //dd($threads);
 
         return $threads;
     }

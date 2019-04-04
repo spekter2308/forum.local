@@ -13,6 +13,7 @@ class Thread extends Model
      * @var array
      */
     protected $guarded = [];
+    protected $with = ['creator', 'channel'];
 
     protected static function boot()
     {
@@ -21,6 +22,7 @@ class Thread extends Model
         static::addGlobalScope('replyCount', function ($builder) {
             $builder->withCount('replies');
         });
+
     }
 
 
@@ -41,7 +43,7 @@ class Thread extends Model
      */
     public function replies()
     {
-        return $this->hasMany(Reply::class)->withCount('favorites_count');
+        return $this->hasMany(Reply::class);
     }
 
      /**

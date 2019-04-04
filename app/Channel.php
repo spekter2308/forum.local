@@ -8,6 +8,12 @@ class Channel extends Model
 {
     protected $guarded = [];
 
+
+    /**
+     * Get a route key name for Laravel
+     *
+     * @return string
+     */
     public function getRouteKeyName()
     {
         return 'slug';

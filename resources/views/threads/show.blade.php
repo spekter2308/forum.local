@@ -7,7 +7,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8">
-                <div class="card">
+                <div class="card" style="margin-bottom: 20px;">
                     <div class="card-header">
                         <a href="#">
                             {{ $thread->creator->name }}
