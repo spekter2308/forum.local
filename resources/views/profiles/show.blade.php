@@ -3,28 +3,22 @@
 @section('content')
         <div class="container">
             <div class="row">
+                <div class="col-md-10 col-md-offset-2">
+
                     <h4>
                         {{ $profileUser->name }}
                         <small>Since {{ $profileUser->created_at->diffForHumans() }}</small>
                     </h4>
-                </div>
-            <p class="border-bottom"></p>
+                    <hr>
 
-        </div>
+                    @foreach ($activities as $activity)
+                        @include("profiles.activities.{$activity->type}")
+                    @endforeach
 
-        @foreach ($profileUser->threads as $thread)
-            <div class="card" style="margin-bottom: 20px;">
-                <div class="card-header">
-                    <a href="#">
-                        {{ $thread->creator->name }}
-                    </a> posted:
-                    {{ $thread->title }}
-                </div>
+                    {{--{{ $threads->links() }}--}}
 
-                <div class="card-body">
-                    {{ $thread->body }}
                 </div>
             </div>
-        @endforeach
+        </div>
 
 @endsection

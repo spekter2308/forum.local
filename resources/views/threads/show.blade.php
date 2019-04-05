@@ -9,10 +9,25 @@
             <div class="col-md-8">
                 <div class="card" style="margin-bottom: 20px;">
                     <div class="card-header">
-                        <a href="#">
-                            {{ $thread->creator->name }}
-                        </a> posted:
-                        {{ $thread->title }}
+                        <div class="level">
+                            <span class="flex">
+                                 <a href="{{ route('profile', $thread->creator) }}">
+                                     {{ $thread->creator->name }}
+                                </a> posted:
+                                {{ $thread->title }}
+                            </span>
+                            
+                           @can('update', $thread)
+                                <form method="POST" action="{{ $thread->path() }}">
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <button class="btn-link btn" type="submit">Delete Thread</button>
+                                </form>
+                           @endcan
+                        </div>
+
+
                     </div>
 
                     <div class="card-body">
