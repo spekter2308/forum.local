@@ -1,14 +1,14 @@
-<div class="card" style="margin-bottom: 20px;">
-    <div class="card-header">
-        <div class="level">
-            <span class="flex">
-                {{ $profileUser->name }} created a thread
-            </span>
-        </div>
-    </div>
+@component('profiles.activities.activity')
 
-    <div class="card-body">
+    @slot('heading')
+        {{ $profileUser->name }} created a thread
+        <a href="{{ $activity->subject->path() }}">
+            {{ $activity->subject->title }}
+        </a>
+    @endslot
+
+    @slot('body')
         {{ $activity->subject->body }}
-    </div>
-</div>
+    @endslot
 
+@endcomponent
