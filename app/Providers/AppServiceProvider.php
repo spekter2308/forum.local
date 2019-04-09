@@ -17,18 +17,18 @@ class AppServiceProvider extends ServiceProvider
     {
         //View::share('channels', Channel::all());
         //Для homestead не працює кешування
-        /*\View::composer('*', function ($view) {
+        \View::composer('*', function ($view) {
             $channels = \Cache::rememberForever('channels', function () {
                 return Channel::get();
             });
             $view->with('channels', $channels);
-        });*/
-        View::composer('*', function ($view) {
+        });
+        /*View::composer('*', function ($view) {
             $channels = \Session('channels', function () {
                 return Channel::get();
             });
             $view->with('channels', $channels);
-        });
+        });*/
 
     }
 
