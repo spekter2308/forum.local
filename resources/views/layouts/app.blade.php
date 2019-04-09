@@ -27,6 +27,7 @@
     </style>
 </head>
 <body style="padding-bottom: 10px">
+    <div id="app">
         @include('layouts.nav')
 
         <main class="py-4">
@@ -34,5 +35,6 @@
         </main>
 
         <flash message="{{ session('flash' ) }}"></flash>
+    </div>
 </body>
 </html>
