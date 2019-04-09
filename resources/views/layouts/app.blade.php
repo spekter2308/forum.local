@@ -23,10 +23,10 @@
         body { padding-bottom: 100px;}
         .level { display: flex; align-items: center; }
         .flex { flex: 1; }
+        .mr { margin-right: 1em; }
     </style>
 </head>
 <body style="padding-bottom: 10px">
-    <div id="app">
         @include('layouts.nav')
 
         <main class="py-4">
@@ -34,6 +34,5 @@
         </main>
 
         <flash message="{{ session('flash' ) }}"></flash>
-    </div>
 </body>
 </html>
