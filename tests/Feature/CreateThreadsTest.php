@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use App\Activity;
-use App\Rules\Recaptcha;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use Tests\TestCase;

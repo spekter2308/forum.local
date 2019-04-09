@@ -16,14 +16,20 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //View::share('channels', Channel::all());
-
-        View::composer('*', function($view)
-        {
-            $channels = \Cache::rememberForever('channels', function() {
-                return Channel::all();
+        //Для homestead не працює кешування
+        /*\View::composer('*', function ($view) {
+            $channels = \Cache::rememberForever('channels', function () {
+                return Channel::get();
+            });
+            $view->with('channels', $channels);
+        });*/
+        View::composer('*', function ($view) {
+            $channels = \Session('channels', function () {
+                return Channel::get();
             });
             $view->with('channels', $channels);
         });
+
     }
 
     /**
@@ -33,6 +39,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-
+        if ($this->app->isLocal()) {
+            $this->app->register(\Barryvdh\Debugbar\ServiceProvider::class);
+        }
     }
 }
