@@ -24,6 +24,18 @@
         .level { display: flex; align-items: center; }
         .flex { flex: 1; }
         .mr { margin-right: 1em; }
+        [v-cloak] { display: none; }
+        .heart:before {
+            content: "\f004";
+            font-family: FontAwesome;
+            font-style: normal;
+            font-weight: normal;
+            //text-decoration: inherit;
+            /*--adjust as necessary--*/
+            color: #000000;
+            font-size: 16px;
+            padding-right: 0.3em;
+        }
     </style>
 </head>
 <body style="padding-bottom: 10px">

@@ -6,6 +6,7 @@ use App\Filters\ReplyFilters;
 use App\Reply;
 use App\Thread;
 use App\User;
+use http\Env\Response;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -38,6 +39,16 @@ class ReplyController extends Controller
 
     /**
      * @param Reply $reply
+     */
+    public function update(Reply $reply)
+    {
+        $this->authorize('update', $reply);
+
+        $reply->update(\request(['body']));
+    }
+
+    /**
+     * @param Reply $reply
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function destroy(Reply $reply)
@@ -45,6 +56,10 @@ class ReplyController extends Controller
         $this->authorize('update', $reply);
 
         $reply->delete();
+
+        if(\request()->expectsJson()) {
+            return \response(['status' => 'Reply deleted']);
+        }
 
         return back();
     }
