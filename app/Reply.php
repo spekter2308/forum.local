@@ -14,6 +14,9 @@ class Reply extends Model
      * @var array
      */
     protected $guarded = [];
+
+    protected $appends = ['isFavorited', 'favoritesCount'];
+
     protected $with = ['owner', 'favorites'];
 
     /**

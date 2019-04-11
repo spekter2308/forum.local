@@ -2,8 +2,17 @@
 
 namespace App;
 
+use function foo\func;
+
 trait Favoritable
 {
+
+    protected static function bootFavoritable()
+    {
+        static::deleting(function ($model) {
+            $model->favorites->each->delete();
+        });
+    }
 
     public function favorites()
     {
@@ -19,9 +28,32 @@ trait Favoritable
         }
     }
 
+    public function unfavorite()
+    {
+        $attributes = ['user_id' => auth()->id()];
+
+        $this->favorites()->where($attributes)->get()
+                ->each->delete();
+    }
+
+    /**
+     * Determine if the current reply has been favorited.
+     *
+     * @return boolean
+     */
     public function isFavorited()
     {
-        return !! $this->favorites->where('user_id', auth()->id())->count();
+        return $this->favorites->where('user_id', auth()->id())->count() ? 1 : 0;
+    }
+
+    /**
+     * Fetch the favorited status as a property.
+     *
+     * @return bool
+     */
+    public function getIsFavoritedAttribute()
+    {
+        return $this->isFavorited();
     }
 
     public function getFavoritesCountAttribute()
