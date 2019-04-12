@@ -1,26 +1,24 @@
 <template>
-    <!--@if (auth()->check())-->
-    <!--<form method="POST" action="{{ $thread->path() . '/replies' }}">-->
-        <div class="form-group">
-            <label for="body">Body:</label>
-            <textarea name="body"
-                      id="body"
-                      class="form-control"
-                      placeholder="Have something to say?"
-                      rows="5"
-                      required
-                      v-model="body"></textarea>
-        </div>
+       <div>
+           <div v-if="signedIn">
+               <div class="form-group">
+                   <label for="body">Body:</label>
+                   <textarea name="body"
+                             id="body"
+                             class="form-control"
+                             placeholder="Have something to say?"
+                             rows="5"
+                             required
+                             v-model="body"></textarea>
+               </div>
 
-        <button type="submit"
-                class="btn btn-primary"
-                @click="addReply">
-        </button>
-    <!--</form>-->
-    <!--@else-->
-    <!--<p class="text-center">Please <a href="{{ route('login') }}">sing in</a> to partisipate this
-        disscussion</p>-->
-    <!--@endif-->
+               <button type="submit" class="btn btn-primary" @click="addReply">Post</button>
+           </div>
+
+           <p class="text-center" v-else>
+               Please <a href="/login">sign in</a> to participate in this discussion.
+           </p>
+       </div>
 </template>
 
 <script>
@@ -28,13 +26,18 @@
         data() {
             return {
                 body: '',
-                endpoint: ''
             }
+        },
+
+        computed: {
+            signedIn() {
+                return window.App.signedIn;
+            },
         },
 
         methods: {
             addReply() {
-                axios.post(this.endpoint, {body: this.body})
+                axios.post(location.pathname + '/replies', {body: this.body})
                      .then(response => {
                          this.body = '';
 

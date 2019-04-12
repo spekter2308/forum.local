@@ -17,7 +17,12 @@ class ReplyController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth', ['except' => 'index']);
+    }
+
+    public function index($channelId, Thread $thread)
+    {
+        return $thread->replies()->paginate(20);
     }
 
     /**
@@ -29,10 +34,14 @@ class ReplyController extends Controller
     {
         $this->validate(\request(), ['body' => 'required']);
 
-        $thread->addReply([
+        $reply = $thread->addReply([
             'user_id' => auth()->id(),
             'body' => \request('body'),
         ]);
+
+        if (\request()->expectsJson()) {
+            return $reply->load('owner');
+        }
 
         return back()->with('flash', 'Your reply has been left');
     }
